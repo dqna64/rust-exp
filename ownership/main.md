@@ -1,0 +1,68 @@
+# RustLang
+- ## Tools
+	- rustc
+	- rustup
+	- cargo
+	- clippy
+## Setup
+	- **rustup**: toolchain installer
+	- `$RUSTUP_HOME` env var
+		- `$HOME/.rustup`
+	- `$CARGO_HOME` env var
+		- `$HOME/.cargo`
+	- `$HOME/.cargo/bin`
+		- contains `cargo`, `rustc`, `rustup` programs
+		- added to `$PATH`
+	- `rustup self uninstall` to revert these changes
+- ## Cargo
+	- `cargo new`
+	- `cargo init`
+	- `cargo run`
+	- `cargo check`
+	- `cargo clean`
+	- `cargo add`
+	- `cargo build`
+- ## Modules
+	- std::io::Stdin
+	- std::print
+-
+- ## Collections
+	- Sequences
+		- Array
+		- Vec
+		- VecDeque
+		- String
+		- LinkedList
+	- Maps
+		- HashMap
+		- BTreeMap
+	- Sets
+		- HashSet
+		- BTreeSet
+	- Misc
+		- BinaryHeap
+	- ...
+	- Discussion
+		- Vec > VecDeque for contiguity, slicing, sorting, spacial locality
+		- VecDeque > Vec for removing
+		-
+- ## Exceptions
+	- Rust uses **unchecked exceptions**
+	- First-class sum types
+	- RUST_BACKTRACE env var
+- ## Ownership
+	- ### References
+		- `&`: Shared borrow / shared reference / read reference
+			- Is exactly a Copy of the pointer
+		- `&mut`: Exclusive borrow / mutable reference / read-write reference
+	- ### Raw Pointers
+- ## Smart Pointers
+	- T
+	- Box<T>
+		- A Box var cannot have the value 0 (null pointer)
+		- Compiler optimisation: `Option<Box<T>>` => `Box<T>`
+	- Rc<T>
+	- RefCell<T>
+	-
+- non lexical lifetime
+- elision, elide
