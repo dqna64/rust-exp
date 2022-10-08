@@ -85,6 +85,40 @@ mod struct_ownership_lifetimes {
     }
 }
 
+mod struct_associated_fns {
+    #[derive(Debug)]
+    enum Condition {
+        new,
+        used,
+    }
+    #[derive(Debug)]
+    struct Car {
+        brand: String,
+        condition: Condition,
+    }
+
+    impl Car {
+        fn new(brand: String) -> Car {
+            Car {
+                brand,
+                condition: Condition::new,
+            }
+        }
+        fn used(brand: String) -> Car {
+            Car {
+                brand,
+                condition: Condition::used,
+            }
+        }
+    }
+
+    pub fn main() {
+        let my_new_car = Car::new(String::from("Volswagen"));
+        dbg!(my_new_car);
+
+    }
+}
+
 mod struct_methods {
     #[derive(Debug)]
     struct Egg {
@@ -93,7 +127,7 @@ mod struct_methods {
     }
 
     impl Egg {
-        fn scramble(&mut self) {
+        fn scramble(&mut self) { //  Short for `&mut self: &mut Self`
             self.typ.push_str(" scrambed");
             self.mass -= 21;
         }
@@ -116,6 +150,8 @@ fn main() {
     structs::main();
     tuple_structs::main();
     
+    struct_methods::main();
+    struct_associated_fns::main();
     struct_methods::main();
     
 }
