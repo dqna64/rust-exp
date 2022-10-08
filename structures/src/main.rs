@@ -71,12 +71,13 @@ mod unit_like_structs {
     }
 }
 
+
 mod struct_ownership_lifetimes {
     struct Item;
     // struct Container needs to specify lifetime of the thing
     // that it's field references.
     struct Container<'a>(&'a Item);
-
+    
     pub fn main() {
         let i = Item;
         let c = Container(&i);
@@ -84,12 +85,37 @@ mod struct_ownership_lifetimes {
     }
 }
 
+mod struct_methods {
+    #[derive(Debug)]
+    struct Egg {
+        typ: String,
+        mass: i32,
+    }
+
+    impl Egg {
+        fn scramble(&mut self) {
+            self.typ.push_str(" scrambed");
+            self.mass -= 21;
+        }
+    }
+
+    pub fn main() {
+        let mut my_egg = Egg {
+            typ: String::from("free range"),
+            mass: 243,
+        };
+
+        my_egg.scramble();
+        dbg!(my_egg);
+    }
+}
 
 
 fn main() {
 
     structs::main();
     tuple_structs::main();
-
+    
+    struct_methods::main();
     
 }
