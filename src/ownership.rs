@@ -54,6 +54,20 @@ pub fn main() {
         println!("{size:?} {size_cpy:?}");
     }
 
+    {
+        let mut lis = vec![1,2,3];
+        lis.push(4);
+        let lis_ref = &mut lis;
+        lis_ref.push(5);
+        println!("{lis_ref:?}");
+    }
+
+    {
+        let lis = vec![1,2,3];
+        let mut sum = 0;
+        lis.iter().for_each(|x| sum += x);
+    }
+
     
 }
 

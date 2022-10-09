@@ -98,14 +98,15 @@ mod struct_associated_fns {
     }
 
     impl Car {
-        fn new(brand: String) -> Car {
-            Car {
+        // In impl block, Self is an alias for whatever comes after impl
+        fn new(brand: String) -> Self {
+            Self {
                 brand,
                 condition: Condition::new,
             }
         }
-        fn used(brand: String) -> Car {
-            Car {
+        fn used(brand: String) -> Self {
+            Self {
                 brand,
                 condition: Condition::used,
             }
@@ -115,6 +116,8 @@ mod struct_associated_fns {
     pub fn main() {
         let my_new_car = Car::new(String::from("Volswagen"));
         dbg!(my_new_car);
+        let my_used_car = Car::used(String::from("GM"));
+        dbg!(my_used_car);
 
     }
 }
@@ -145,7 +148,7 @@ mod struct_methods {
 }
 
 
-fn main() {
+pub fn main() {
 
     structs::main();
     tuple_structs::main();

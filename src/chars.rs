@@ -1,4 +1,4 @@
-fn main() {
+pub fn main() {
     println!("Hello, world!");
 
     let my_str = String::from("this is a string in the stack");
