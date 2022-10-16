@@ -25,7 +25,8 @@
 - ## Modules
 	- std::io::Stdin
 	- std::print
--
+- ## Match
+  - Exhaustive guaranteed, checked at compile time
 - ## Collections
 	- Sequences
 		- Array

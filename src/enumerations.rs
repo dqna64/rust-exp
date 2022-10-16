@@ -114,9 +114,31 @@ mod option_enum_match {
         }
     }
     pub fn main() {
-        let boring = String::from("Hello");
-        let excited = exclamationise(Some(boring));
+        let boring = Some(String::from("Hello"));
+        let excited = exclamationise(boring);
         dbg!(excited);
+
+        let call = None;
+        let response = exclamationise(call);
+        dbg!(response);
+    }
+}
+
+mod match_i32 {
+    pub fn main() {
+        let n = 12;
+        let res = match n {
+            i32::MIN..=-1 => "negative",
+            0 => "nil",
+            1 => "single",
+            2 => "double",
+            3 => "triple",
+            4 => "quadruple",
+            5..=11 => "multiple",
+            12 => "dozen",
+            13..=i32::MAX => "too many",
+        };
+        dbg!(res);
     }
 }
 
@@ -126,5 +148,6 @@ pub fn main() {
     enum_values_diff_args::main();
     enum_pattern_matching::main();
     option_enum_match::main();
+    match_i32::main();
 
 }
