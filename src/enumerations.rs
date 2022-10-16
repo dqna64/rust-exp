@@ -102,10 +102,29 @@ mod enum_pattern_matching {
     }
 }
 
+mod option_enum_match {
+    fn exclamationise(s: Option<String>) -> Option<String> {
+        match s {
+            None => None,
+            Some(s) => {
+                let mut new_s = s.clone();
+                new_s.push('!');
+                Some(new_s)
+            }
+        }
+    }
+    pub fn main() {
+        let boring = String::from("Hello");
+        let excited = exclamationise(Some(boring));
+        dbg!(excited);
+    }
+}
+
 pub fn main() {
     enum_::main();
     enum_values::main();
     enum_values_diff_args::main();
     enum_pattern_matching::main();
+    option_enum_match::main();
 
 }
