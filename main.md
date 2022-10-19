@@ -57,6 +57,17 @@
 			- Is exactly a Copy of the pointer
 		- `&mut`: Exclusive borrow / mutable reference / read-write reference
 	- ### Raw Pointers
+- ## Modularity
+  - Package
+  - Crate
+    - Binary crate
+      - *src/main.rs* default root
+      - *src/bin/* default root of multiple binary crates
+    - Library crate default root
+      - *src/lib.rs*
+  - Module
+    - *mod.rs*
+  - Path
 - ## Smart Pointers
 	- T
 	- Box<T>

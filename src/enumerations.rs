@@ -24,7 +24,7 @@ mod enum_ {
     }
 }
 
-mod enum_values {
+pub mod enum_values {
     /**
      * You can attch data to each variant of an enum.
      * The name of each enum variant becomes a function that contructs
@@ -142,6 +142,25 @@ mod match_i32 {
     }
 }
 
+mod catch_all_pattern {}
+
+mod pattern_placeholder {}
+
+mod if_let {
+    /**
+     * If-let pattern matching achieves convenience
+     * at the cost of compiler-enforced exhaustive checking
+     */
+    pub fn main() {
+        let maybe_value = Some(43);
+        if let Some(certainly_value) = maybe_value {
+            println!("There is certainly a value: {certainly_value}");
+        } else {
+            println!("There is no value");
+        }
+    }
+}
+
 pub fn main() {
     enum_::main();
     enum_values::main();
@@ -149,5 +168,6 @@ pub fn main() {
     enum_pattern_matching::main();
     option_enum_match::main();
     match_i32::main();
+    if_let::main();
 
 }
