@@ -67,7 +67,27 @@
       - *src/lib.rs*
   - Module
     - *mod.rs*
+    - *mod* to declare submodules
   - Path
+    - Absolute path
+      - Crate name to reference external crate
+      - *crate* literal to reference current crate
+    - Relative path
+      - Starts with *self*, *super* or an identifier
+    - *use*
+      - Brings paths into this scope (only this scope, not subscopes)
+      - Like creating a symbolic link to some path
+      - Idiom
+        - For functions, specify parent mod e.g. `use parent; parent::function();`
+        - For structs and enums, just import the whole path and use the struct or enum name e.g. `use parent:MyStruct; let x = MyStruct::new();`
+      - Nested paths
+        - `use std::{cmp::Ordering, io};`
+        - `use std::io::{self, Write};`
+      - Glob operator
+        - `use std::collections::*;`
+    - *as*
+    - *pub*
+    - *pub use*: re-exporting
 - ## Smart Pointers
 	- T
 	- Box<T>
