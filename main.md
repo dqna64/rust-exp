@@ -150,7 +150,12 @@
 			- choose `FnOnce` by default to afford greatest freedom for inside scope, then move right as you require more outside freedom
 			- `FnOnce` ⊃ `FnMut` ⊃ `Fn` ⊃ `fn`
 				- any instance of a subtrait can be used where a supertrait is expected
-		- `move` closures can also implement `FnMut` and `Fn`! It refers to how the closure captures variables (move), while the traits are determined by what the closure does with the captured values.
+				- All closures implement `FnOnce`, and the other traits in addition
+		- `move` closures can also implement `FnMut` and `Fn`! `move` to how the closure captures variables (move), while the trait for the closure is chosen based on what the closure does with the captured values.
+		- References to closures
+			- If type  `F`  implements the  `Fn`  trait then  `&F`  also implements the  `Fn`  trait.
+			- If type  `F`  implements the  `FnMut`  trait then  `&mut F`  also implements the  `FnMut`  trait.
+			- https://zhauniarovich.com/post/2020/2020-12-closures-in-rust/
 - ## Concurrency
 	- `JoinHandle` return type of thread spawn.
 	- `std::thread::spawn`
