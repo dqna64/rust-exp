@@ -51,7 +51,7 @@
 	- Rust uses **unchecked exceptions**
 	- First-class sum types
 	- RUST_BACKTRACE env var
-- ## Ownership
+- ## Ownership & Borrowing
 	- ### References
 		- `&`: Shared borrow / shared reference / read reference
 			- Is exactly a Copy of the pointer
@@ -128,6 +128,17 @@
 	- Forwarding macros
 		- Only `ident`, `lifetime` and `tt` can be matched by literal tokens in second macro
 	- Macro recursion
+- ## Iterators
+	- `Iterator` trait
+	- Creating an iterator
+		- `iter()`
+		- `into_iter()`
+		- `iter_mut()`
+	- Rust iterators are **lazy**
+	- **Iterator adaptors**
+		- don't consume the iterator, but returns a new one
+		- e.g. `map`, `filter`
+	- **Consuming adaptors** e.g. `next`, `sum`, `any`, `all`, `collect`
 - ## Functions
 	- ### Function pointers
 		- `fn(T, U, V, ...) -> R`

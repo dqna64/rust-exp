@@ -68,7 +68,24 @@ mod enum_vs_struct {
 }
 
 mod enum_impl {
-    // todo!("do this");
+    #[derive(Debug)]
+    enum Block {
+        Glowstone,
+        Netherrack,
+        Wood(String),
+        Sandstone,
+    }
+
+    impl Block {
+        fn print_block(&self) {
+            println!("I am a {:?}", self);
+        }
+    }
+
+    pub fn main() {
+        let b = Block::Wood(String::from("cedar"));
+        b.print_block();
+    }
 }
 
 mod option_enum {
@@ -166,8 +183,10 @@ pub fn main() {
     enum_values::main();
     enum_values_diff_args::main();
     enum_pattern_matching::main();
+    enum_impl::main();
     option_enum_match::main();
     match_i32::main();
     if_let::main();
+
 
 }
