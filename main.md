@@ -26,7 +26,7 @@
 	- std::io::Stdin
 	- std::print
 - ## Match
-  - Exhaustive guaranteed, checked at compile time
+	- Exhaustive guaranteed, checked at compile time
 - ## Collections
 	- Sequences
 		- Array
@@ -58,36 +58,45 @@
 		- `&mut`: Exclusive borrow / mutable reference / read-write reference
 	- ### Raw Pointers
 - ## Modularity
-  - Package
-  - Crate
-    - Binary crate
-      - *src/main.rs* default root
-      - *src/bin/* default root of multiple binary crates
-    - Library crate default root
-      - *src/lib.rs*
-  - Module
-    - *mod.rs*
-    - *mod* to declare submodules
-  - Path
-    - Absolute path
-      - Crate name to reference external crate
-      - *crate* literal to reference current crate
-    - Relative path
-      - Starts with *self*, *super* or an identifier
-    - *use*
-      - Brings paths into this scope (only this scope, not subscopes)
-      - Like creating a symbolic link to some path
-      - Idiom
-        - For functions, specify parent mod e.g. `use parent; parent::function();`
-        - For structs and enums, just import the whole path and use the struct or enum name e.g. `use parent:MyStruct; let x = MyStruct::new();`
-      - Nested paths
-        - `use std::{cmp::Ordering, io};`
-        - `use std::io::{self, Write};`
-      - Glob operator
-        - `use std::collections::*;`
-    - *as*
-    - *pub*
-    - *pub use*: re-exporting
+	- Package
+	- Crate
+		- Binary crate
+			- *src/main.rs* default root
+			- *src/bin/* default root of multiple binary crates
+			- Client code
+		- Library crate default root
+			- *src/lib.rs*
+	- Module
+		- *mod.rs*
+		- *mod* to declare submodules
+		- Module tree
+	- Path
+		- Absolute path
+			- Crate name to reference external crate
+			- *crate* literal to reference current crate
+		- Relative path
+			- Starts with *self*, *super* or an identifier
+		- *use*
+			- Brings paths into this scope (only this scope, not subscopes)
+			- Like creating a symbolic link to some path
+			- Idiom
+				- For functions, specify parent mod e.g. `use parent; parent::function();`
+				- For structs and enums, just import the whole path and use the struct or enum name e.g. `use parent:MyStruct; let x = MyStruct::new();`
+			- Nested paths
+				- `use std::{cmp::Ordering, io};`
+				- `use std::io::{self, Write};`
+			- Glob operator
+				- `use std::collections::*;`
+		- *as*
+		- *pub*
+		- *pub use*: re-exporting
+- ## Generics
+	- monomorphization
+	- static dispatch
+	- dynamic dispatch
+- ## Traits
+	- Examples
+		- `std::cmp::PartialOrd`
 - ## Smart Pointers
 	- T
 	- Box<T>
@@ -99,5 +108,85 @@
 	- `cargo doc`
 	- `cargo test`
 	- `cargo test --doc`
-- non lexical lifetime
-- elision, elide
+- ## Macros
+	- https://tfpk.github.io/macrokata
+	- Metavariables
+	- Fragment specifiers
+		- `literal`
+		- `expr` (superset of `literal`)
+		- `ident`
+		- `lifetime`
+		- `block`
+		- `tt`
+	- if you want to return a value from a macro rule, make sure to put it in a block, otherwise `let res = let macro_res = 5; macro_res`
+	- Repetition
+		- `$(the $e:expr)and+` matches `the "fox" and the "crow" and the "cat"`
+		- variadic functions e.g. `print()`. Implemented in e.g. `println!()`, `vec![]`
+		- Nested repetition
+	- Ambiguity and ordering
+		- `literal`s are `expr`s, so put `expr`s after
+	- Forwarding macros
+		- Only `ident`, `lifetime` and `tt` can be matched by literal tokens in second macro
+	- Macro recursion
+- ## Functions
+	- ### Function pointers
+		- `fn(T, U, V, ...) -> R`
+		- No environment
+	- ### Closures
+		- closure = fn pointer + environment
+		- Closure type created in runtime, but all implement `FnOnce`, `FnMut`, `Fn`
+		- `move`
+		- Capturing
+			- Three ways, which map to the three ways that functions take parameters
+				- taking ownership: `FnOnce`
+				- borrowing mutably: `FnMut`
+				- borrowing immutably: `Fn`
+			- compiler decides which depending on what the closure does with its captured values
+	- `FnOnce`, `FnMut`, `Fn`
+		- As is with the borrowship system in rust, its a tradeoff between readability and mutability
+		- `FnOnce`, `FnMut`, `Fn`, `fn`
+			- most to least restrictive for outside scope (readability of arguments)
+			- least to most restrictive for inside scope (mutability of arguments)
+			- choose `FnOnce` by default to afford greatest freedom for inside scope, then move right as you require more outside freedom
+			- `FnOnce` ⊃ `FnMut` ⊃ `Fn` ⊃ `fn`
+				- any instance of a subtrait can be used where a supertrait is expected
+		- `move` closures can also implement `FnMut` and `Fn`! It refers to how the closure captures variables (move), while the traits are determined by what the closure does with the captured values.
+- ## Concurrency
+	- `JoinHandle` return type of thread spawn.
+	- `std::thread::spawn`
+	- `std::cell` - shareable mutable containers
+		- Allows you to bypass the regular memory safety rules in rust for special cases
+		- `cell` types
+			- `Cell<T>`
+			- `RefCell<T>`
+		- `cell` types specifically do NOT implement `Sync`. hence they are not thread-safe - still prone to data races.
+	- `std::marker::Send` trait
+		- just a marker trait, no behaviour associated
+		- an `auto` trait
+		- Marks something as okay to be **moved** between thread
+	- `std::marker::Sync`
+		- Marks something as okay to be **shared** between thread
+	- `std::sync`
+		- Synchronisaiton primitives
+			- `Mutex<T>`
+			- `RwLock<T>`
+			- `atomic`
+	- `rc`, `Arc`
+		- reference counting
+	- `std::thread::scope`
+		- joins all threads at scopes termination
+		- removes need for `Arc` around Mutex
+	- atomics
+		- much faster than mutex
+	- Poisoning
+	- Channels
+		- `std::sync::mpsc::channel` to create a sender and receiver
+		- `std::sync::mpsc::Sender`
+			- Sender is `clone` which is how we can have multiple producers (Receiver is not)
+		- `std::sync::mpsc::Receiver`
+	- Rayon crate
+	- `unsafe` blocks
+		- allows you to bypass a few memory management rules e.g. mutate global var
+- ## Misc
+	- non lexical lifetime
+	- elision, elide
