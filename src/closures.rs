@@ -90,19 +90,76 @@ mod move_into_closure {
     }
 }
 
-mod fjdksla {
-    struct TownHall {
-        level: i32,
-        reputation: i32,
+mod capture_single_struct_field {
+    struct Supper {
+        drink: String,
+        snack: String,
     }
+    
+    pub fn main() {
+        let mut my_supper = Supper {
+            drink: String::from("Hot chocolate"),
+            snack: String::from("Marshmellows"),
+        };
+        let have_a_sip = || println!("Sipping {}", my_supper.drink);
+        my_supper.snack.push_str(" on toast");
+        have_a_sip();
+    }
+}
 
-    impl TownHall {
-        fn change_rep<F>(&mut self, mut f: F)
-        where
-            F: Fn(i32) -> i32
-        {
-            self.reputation = f(self.reputation);
-        }
+mod closure_trait_bounds {
+    /// From https://zhauniarovich.com/post/2020/2020-12-closures-in-rust/
+    fn call_Fn<F>(f: F)
+    where
+        F: Fn(),
+    {
+        f();
+    }
+    
+    fn call_FnMut<F>(mut f: F)
+    where
+        F: FnMut(),
+    {
+        f();
+    }
+    
+    fn call_FnOnce<F>(f: F)
+    where
+        F: FnOnce(),
+    {
+        f();
+    }
+    
+    /// If `F` implements `Fn` then `&F` also
+    /// If `F` implements `FnMut` then `&mut F` also
+    /// So we can just pass references to those closures
+    pub fn main() {
+        let immut_val = String::from("immut");
+        let Fn_closure = || {
+            println!("Len: {}", immut_val.len());
+        };
+    
+        let mut mut_val = String::from("mut");
+        let mut FnMut_closure = || {
+            mut_val.push_str("-new");
+        };
+    
+        let value = String::from("value");
+        let FnOnce_closure = || {
+            let _moved_value = value;
+        };
+    
+        call_Fn(&Fn_closure);
+        call_FnMut(&Fn_closure);
+        call_FnOnce(&Fn_closure);
+    
+        // call_fn(FnMut_closure); //error: FnMut_closure implements `FnMut`, not `Fn`
+        call_FnMut(&mut FnMut_closure);
+        call_FnOnce(&mut FnMut_closure);
+    
+        // call_fn(FnOnce_closure); //error: FnOnce_closure implements `FnOnce`, not `Fn`
+        // call_fn_mut(FnOnce_closure); //error: FnOnce_closure implements `FnOnce`, not `FnMut`
+        call_FnOnce(FnOnce_closure);
     }
 }
 
@@ -112,4 +169,6 @@ pub fn main() {
     capture_by_immutable_borrow::main();
     capture_by_mutable_borrow::main();
     move_into_closure::main();
+    capture_single_struct_field::main();
+    closure_trait_bounds::main();
 }
