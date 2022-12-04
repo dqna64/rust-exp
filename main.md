@@ -106,6 +106,7 @@
 	- RefCell<T>
 - ## Documentation
 	- `cargo doc`
+	- `cargo doc --open`
 	- `cargo test`
 	- `cargo test --doc`
 - ## Macros
