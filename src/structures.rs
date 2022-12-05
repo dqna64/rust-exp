@@ -60,7 +60,7 @@ mod tuple_structs {
 mod unit_like_structs {
     #[derive(Debug)]
     struct Unit;
-
+    
     pub fn main() {
         let u1 = Unit;
         println!("{u1:?}");
@@ -130,7 +130,7 @@ mod struct_methods {
     }
 
     impl Egg {
-        fn scramble(&mut self) { //  Short for `&mut self: &mut Self`
+        fn scramble(&mut self) { //  Short for `self: &mut Self`
             self.typ.push_str(" scrambed");
             self.mass -= 21;
         }

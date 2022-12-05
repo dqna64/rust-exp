@@ -1,4 +1,11 @@
 # RustLang
+- ## Cool Rust Language Features
+	- **Match control flow construct**
+	- **Ownership and borrowing**
+	- **Lifetimes**
+	- **Traits**
+	- **Macro system**
+	- **Synchronisation primitives**
 - ## Tools
 	- rustc
 	- rustup
@@ -25,7 +32,13 @@
 - ## Modules
 	- std::io::Stdin
 	- std::print
-- ## Match
+- ## Common Programming Concepts
+	- Variables and mutability
+	- Data types
+	- Functions
+	- Control flow
+		- You can specify loop labels to break specific loops from nested scopes
+- ## Match Control Flow Construct
 	- Exhaustive guaranteed, checked at compile time
 - ## Collections
 	- Sequences
@@ -52,6 +65,8 @@
 	- First-class sum types
 	- RUST_BACKTRACE env var
 - ## Ownership & Borrowing
+	- Stack vs heap
+	- Allocating memory and returning memory
 	- ### References
 		- `&`: Shared borrow / shared reference / read reference
 			- Is exactly a Copy of the pointer
@@ -180,9 +195,9 @@
 	- `std::marker::Send` trait
 		- just a marker trait, no behaviour associated
 		- an `auto` trait
-		- Marks something as okay to be **moved** between thread
+		- Marks something as okay to be **moved** between threads
 	- `std::marker::Sync`
-		- Marks something as okay to be **shared** between thread
+		- Marks something as okay to be **shared** between threads
 	- `std::sync`
 		- Synchronisaiton primitives
 			- `Mutex<T>`

@@ -14,5 +14,11 @@ pub fn main() {
         let first_word = first_word(&s);
         println!("{first_word:?}");
     }
+
+    {
+        let s = String::from("fda fdsla fjd");
+        let p = &s[0..3];
+        dbg!(p);
+    }
 }
 

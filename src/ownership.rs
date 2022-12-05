@@ -18,7 +18,7 @@ pub fn main() {
         let s1 = String::from("Good morning");
         let s2 = s1;
         // Value of s1 moved to s2
-        // println!("{s1:?}"); // Move occurs here
+        // println!("{s1:?}"); // Error: Borrow of moved value `s1`
         println!("{s2:?}");
     }
 
@@ -60,12 +60,15 @@ pub fn main() {
         let lis_ref = &mut lis;
         lis_ref.push(5);
         println!("{lis_ref:?}");
+        println!("{lis:?}");
     }
 
     {
         let lis = vec![1,2,3];
         let mut sum = 0;
         lis.iter().for_each(|x| sum += x);
+        dbg!(lis);
+        dbg!(sum);
     }
 
     
